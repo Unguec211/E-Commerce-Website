@@ -1,0 +1,161 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>North & Nest Commerce</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#home" aria-label="North and Nest home">
+          <span class="brand-mark">N</span>
+          <span>North & Nest</span>
+        </a>
+        <div class="nav-links">
+          <a href="#shop">Shop</a>
+          <a href="#collections">Collections</a>
+          <a href="#checkout">Checkout</a>
+        </div>
+        <div class="nav-actions">
+          <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle theme" title="Toggle theme">◐</button>
+          <button class="cart-button" id="cartOpen" type="button" aria-label="Open cart">
+            <span>Cart</span>
+            <strong id="cartCount">0</strong>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <p class="eyebrow">Spring studio drop</p>
+          <h1>North & Nest</h1>
+          <p>Curated home goods, daily carry, and small luxuries selected for calm spaces and useful routines.</p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#shop">Shop new arrivals</a>
+            <a class="secondary-link" href="#collections">Browse collections</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="Store benefits">
+        <div><strong>Free shipping</strong><span>Orders over $75</span></div>
+        <div><strong>Easy returns</strong><span>30-day window</span></div>
+        <div><strong>Secure checkout</strong><span>Mock payment flow</span></div>
+        <div><strong>Support</strong><span>Weekday replies</span></div>
+      </section>
+
+      <section class="section" id="collections">
+        <div class="section-heading">
+          <p class="eyebrow">Collections</p>
+          <h2>Shop by mood</h2>
+        </div>
+        <div class="collection-grid" id="collectionGrid"></div>
+      </section>
+
+      <section class="section shop-section" id="shop">
+        <div class="section-heading">
+          <p class="eyebrow">Catalog</p>
+          <h2>Featured products</h2>
+        </div>
+
+        <div class="toolbar" aria-label="Product controls">
+          <label class="search-field">
+            <span>Search</span>
+            <input id="searchInput" type="search" placeholder="Search products" autocomplete="off" />
+          </label>
+          <label>
+            <span>Category</span>
+            <select id="categoryFilter"></select>
+          </label>
+          <label>
+            <span>Sort</span>
+            <select id="sortSelect">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: low to high</option>
+              <option value="price-high">Price: high to low</option>
+              <option value="rating">Top rated</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+        <p class="empty-state" id="emptyState" hidden>No products match your filters.</p>
+      </section>
+
+      <section class="section checkout-layout" id="checkout">
+        <div>
+          <div class="section-heading">
+            <p class="eyebrow">Checkout</p>
+            <h2>Complete your order</h2>
+          </div>
+          <form class="checkout-form" id="checkoutForm">
+            <div class="form-row">
+              <label>First name<input name="firstName" required /></label>
+              <label>Last name<input name="lastName" required /></label>
+            </div>
+            <label>Email<input name="email" type="email" required /></label>
+            <label>Address<input name="address" required /></label>
+            <div class="form-row">
+              <label>City<input name="city" required /></label>
+              <label>ZIP<input name="zip" inputmode="numeric" required /></label>
+            </div>
+            <label>Delivery method
+              <select name="delivery" id="deliverySelect">
+                <option value="standard">Standard shipping - $6.95</option>
+                <option value="express">Express shipping - $14.95</option>
+                <option value="pickup">Studio pickup - Free</option>
+              </select>
+            </label>
+            <label>Payment
+              <select name="payment">
+                <option>Card ending in 4242</option>
+                <option>PayPal sandbox</option>
+                <option>Apple Pay demo</option>
+              </select>
+            </label>
+            <button class="primary-button" type="submit">Place order</button>
+            <p class="form-note">This demo validates the cart and saves a mock order to the backend. No real payment is processed.</p>
+          </form>
+        </div>
+        <aside class="order-summary" aria-label="Order summary">
+          <h3>Order summary</h3>
+          <div id="summaryItems"></div>
+          <dl>
+            <div><dt>Subtotal</dt><dd id="summarySubtotal">$0.00</dd></div>
+            <div><dt>Shipping</dt><dd id="summaryShipping">$0.00</dd></div>
+            <div><dt>Tax</dt><dd id="summaryTax">$0.00</dd></div>
+            <div class="total"><dt>Total</dt><dd id="summaryTotal">$0.00</dd></div>
+          </dl>
+          <div class="promo">
+            <input id="promoInput" placeholder="Promo code" aria-label="Promo code" />
+            <button id="promoButton" type="button">Apply</button>
+          </div>
+          <p id="promoMessage" class="promo-message" aria-live="polite"></p>
+        </aside>
+      </section>
+    </main>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Shopping cart">
+      <div class="drawer-panel">
+        <div class="drawer-header">
+          <h2>Your cart</h2>
+          <button class="icon-button" id="cartClose" type="button" aria-label="Close cart">×</button>
+        </div>
+        <div id="cartItems" class="cart-items"></div>
+        <div class="drawer-footer">
+          <div class="drawer-total"><span>Total</span><strong id="drawerTotal">$0.00</strong></div>
+          <a class="primary-link full" href="#checkout" id="checkoutLink">Checkout</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="{% static 'script.js' %}"></script>
+  </body>
+</html>
